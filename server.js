@@ -82,7 +82,6 @@ app.get("/scrape", function (req, res) {
                 return res.json(err);
             });
         });
-
         res.json(articles);
     });
 });
