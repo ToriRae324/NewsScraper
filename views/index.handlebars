@@ -1,0 +1,31 @@
+{{!-- container for all articles --}}
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            {{!-- empty col --}}
+        </div>
+        <div class="col-md-8">
+
+            {{!-- for each article --}} {{#each Article}}
+            <div class="row">
+                {{!-- card --}} {{!-- card image top --}} {{!-- A.Image --}} {{!-- A.Title --}} {{!-- A.Summary --}} {{!-- A.link --}} {{!--
+                New Comment Form --}} {{!-- A.Comments --}} {{#each this.Comments}}
+                <p> {{comment}} </p>
+                {{/each}}
+            </div>
+            {{/each}}
+
+        </div>
+        <div class="col-md-2">
+            {{!-- empty col --}}
+        </div>
+    </div>
+
+
+
+
+
+
+
+    {{!-- end container --}}
+</div>
