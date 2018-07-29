@@ -41,9 +41,9 @@ mongoose.connect(MONGODB_URI);
 
 
 const scrapeNews = function () {
-    axios.get("http://www.blacknews.com/").then(function (response) {
+    axios.get("http://www.blacknews.com/").then(function (res) {
         // Then, we load that into cheerio and save it to $ for a shorthand selector
-        var cheer = cheerio.load(response.data);
+        var cheer = cheerio.load(res.data);
 
         var articles = [];
 
@@ -80,9 +80,10 @@ const scrapeNews = function () {
                     return err;
                 });
         });
-        console.log("News Scraped");
+        console.log("Scrapping");
 
     });
+    return true;
 }
 
 
@@ -90,9 +91,7 @@ const scrapeNews = function () {
 
 // scape on load
 app.get("/scrape", function (req, res) {
-    scrapeNews();
-    res.send("News Scraped");
-
+    scrapeNews()
 });
 
 // get all articles with comments from database
@@ -152,7 +151,7 @@ app.delete("/comments/:id", function(req, res){
 // HTML Routes
 
 app.get("/", function (req, res) {
-    scrapeNews()
+    // scrapeNews()
 
     db.Article.find({})
         .populate("comments")

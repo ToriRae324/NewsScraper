@@ -1,4 +1,15 @@
-// $(document).ready(function () {
+$("#scrape").on("click", function(){
+    $.ajax({
+        method: "GET",
+        url: "/scrape"
+    })
+    .then(function(data){
+        if (data === true) {
+            console.log("Scrape Complete")
+            location.reload();
+        }
+    })
+})
 
     $(document).on("click", ".submitComment", function() {
         event.preventDefault();
@@ -37,4 +48,3 @@
             
         });
     })
-// })
