@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    $(document).on("click", ".submitComment", function () {
+    $(document).on("click", ".submitComment", function() {
         event.preventDefault();
 
         const id = $(this).data("_id");
@@ -8,22 +8,22 @@ $(document).ready(function () {
 
         console.log("comment: ", commentText, " -- id: ", id);
 
-        $.ajax({
-            method: "POST",
-            url: "/articles/" + id,
-            data: {
-                comment: commentText
-            }
-        }).then(function (newComment) {
-            console.log(newComment);
-            $(".commentText").val("");
+        // $.ajax({
+        //     method: "POST",
+        //     url: "api/articles/" + id,
+        //     data: {
+        //         comment: commentText
+        //     }
+        // }).then(function (newComment) {
+        //     console.log(newComment);
+        //     $(".commentText").val("");
 
-            // var html =
-            // `<p><span class="delete" data-id=${newComment._id}>x</span>${newComment.commentText}</p>`;
-            // $("#"+newComment.).prepend(html);
+        //     // var html =
+        //     // `<p><span class="delete" data-id=${newComment._id}>x</span>${newComment.commentText}</p>`;
+        //     // $("#"+newComment.).prepend(html);
 
-            // location.reload();
-        });
+        //     // location.reload();
+        // });
     })
 
 })

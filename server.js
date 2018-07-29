@@ -74,7 +74,7 @@ const scrapeNews = function () {
             // Push each result to database
             db.Article.create(result)
                 .then(function (dbArticle) {
-                    console.log(dbArticle);
+                    console.log("Articles Added");
                 })
                 .catch(function (err) {
                     return err;
@@ -108,15 +108,28 @@ app.get("/articles", function (req, res) {
         })
 });
 
+// get one article with comments
+app.get("/articles/:id", function (req, res) {
+    db.Article.findById(req.params.id)
+        .populate("comments")
+        .then(function (popArts) {
+            res.json(popArts);
+        })
+        .catch(function (err) {
+            console.log(err);
+            res.json(err);
+        })
+});
+
 // post comment to article
-app.post("/articles/:id", function (req, res) {
+app.post("articles/:id", function (req, res) {
     db.Comment.create(req.body)
         .then(function (newComment) {
-            return db.Article.findByIdAndUpdate(req.params.id, { $push: { comment: newComment._id } }, { new: true });
+            return db.Article.findByIdAndUpdate(req.params.id, { $push: { comments: newComment._id } }, { new: true });
         })
-        // .then(function (newArticle) {
-        //     res.json(newArticle);
-        // })
+        .then(function (newArticle) {
+            res.json(newArticle);
+        })
         .catch(function (err) {
             console.log(err);
             res.json(err);
@@ -131,7 +144,7 @@ app.get("/", function (req, res) {
     db.Article.find({})
         .populate("comments")
         .then(function (popArts) {
-            console.log({ Article: popArts });
+            // console.log({ Article: popArts });
             res.render("index", { Article: popArts });;
         })
         .catch(function (err) {
