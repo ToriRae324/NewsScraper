@@ -1,0 +1,31 @@
+
+
+.comments {
+    max-height: 200px;
+    overflow: scroll;
+}
+
+.comments::-webkit-scrollbar { 
+    display: none; 
+}
+
+img {
+    height: 175px;
+    width: 175px;
+    object-fit: cover;
+    float: left;
+    margin: 0 10px;
+}
+
+form {
+    clear: both;
+    margin: 10px 0
+}
+
+.card {
+    margin: 10px 0;
+}
+
+.delete {
+    color: red;
+}

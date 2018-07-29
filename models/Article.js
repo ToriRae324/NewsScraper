@@ -7,14 +7,15 @@ var ArticleSchema = new Schema({
     //* URL - the url to the original article
     //* Feel free to add more content to your database (photos, bylines, and so on).
 
-    headline: {
+    title: {
         type: String,
         unique: true,
         required: true
     },
     summary: {
         type: String,
-        required: true
+        required: true,
+        default: "No Summary Provided"
     },
     url: {
         type: String,

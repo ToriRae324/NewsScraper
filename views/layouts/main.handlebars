@@ -1,23 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>News Scraper</title>
 
-    {{!-- Stylesheets --}}
+    {{!-- Stylesheets --}} {{!-- bootstrap --}}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/style2.css">
+    <link rel="stylesheet" href="/style.css">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+
 
 </head>
+
 <body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                {{!-- empty --}}
+            </div>
+            <div class="col-md-8">
 
-    {{!-- Scraper Header --}}
+                <div class="jumbotron">
 
-    {{{body}}}
+                    <h1 class="display-4">Black News</h1>
+                    <p class="lead">Scraped from BlackNews.com</p>
 
-    {{!-- Footer --}}
+                </div>
+            </div>
+            <div class="col-md-2">
+                {{!-- empty --}}
+            </div>
+        </div>
+        {{!-- Scraper Header --}} {{!-- container for all articles --}}
 
-    {{!-- Add'l Scripts --}}
-    
+        <div class="row">
+            <div class="col-md-2">
+                {{!-- empty col --}}
+            </div>
+            <div class="col-md-8">
+
+                {{{body}}}
+
+            </div>
+            <div class="col-md-2">
+                {{!-- empty col --}}
+            </div>
+        </div>
+    </div>
+
+
+    {{!-- Footer --}} {{!-- Add'l Scripts --}}
+
 </body>
+
 </html>

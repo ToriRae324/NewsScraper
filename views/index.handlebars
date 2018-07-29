@@ -1,31 +1,32 @@
-{{!-- container for all articles --}}
-<div class="container">
-    <div class="row">
-        <div class="col-md-2">
-            {{!-- empty col --}}
-        </div>
-        <div class="col-md-8">
+{{!-- for each article --}} {{#each Article}}
+<div class="row">
+    <div class="card">
+        <div class="card-body">
+            <img src={{{image}}} alt="Image">
+            <h5 class="card-title">{{{title}}}</h5>
+            <p class="card-text">{{{summary}}}</p>
+            <a href={{{url}}} class="card-link" target="_blank">Read Full Article</a>
+            <br>
+            <hr>
 
-            {{!-- for each article --}} {{#each Article}}
-            <div class="row">
-                {{!-- card --}} {{!-- card image top --}} {{!-- A.Image --}} {{!-- A.Title --}} {{!-- A.Summary --}} {{!-- A.link --}} {{!--
-                New Comment Form --}} {{!-- A.Comments --}} {{#each this.Comments}}
-                <p> {{comment}} </p>
+            <form>
+                <div class="form-group">
+                    <label for="commentText">Leave a Comment:</label>
+                    <input type="text" class="form-control commentText" name="comment" maxlength="255">
+                </div>
+                <button class="btn btn-info btn-sm submitComment" data-id={{_id}}>Comment</button>
+            </form>
+
+            <br>
+            <h6>Comments</h6>
+            <div class="comments" id={{_id}}>
+                {{#each this.comments}}
+                <p><span class="delete" data-id={{_id}}>x</span> {{comment}} </p>
                 {{/each}}
             </div>
-            {{/each}}
 
         </div>
-        <div class="col-md-2">
-            {{!-- empty col --}}
-        </div>
+
     </div>
-
-
-
-
-
-
-
-    {{!-- end container --}}
 </div>
+{{/each}}
