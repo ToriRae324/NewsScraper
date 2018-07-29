@@ -39,13 +39,12 @@ mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
 
 
-
+// function to scrape news site and add to database
 const scrapeNews = function () {
     axios.get("http://www.blacknews.com/").then(function (res) {
         // Then, we load that into cheerio and save it to $ for a shorthand selector
         var cheer = cheerio.load(res.data);
 
-        var articles = [];
 
         cheer(".post-body.entry-content").each(function (i, element) {
             // Save an empty result object
@@ -70,26 +69,28 @@ const scrapeNews = function () {
                 .children("img")
                 .attr("src");
 
-            articles.push(result);
+
             // Push each result to database
             db.Article.create(result)
                 .then(function (dbArticle) {
-                    console.log("Articles Added");
+                    console.log("Article Added");
                 })
                 .catch(function (err) {
                     return err;
                 });
+
+        
         });
         console.log("Scrapping");
 
     });
-    return true;
+    
 }
 
 
 // API Routes
 
-// scape on load
+// scape the website and add to database
 app.get("/scrape", function (req, res) {
     scrapeNews()
 });
@@ -135,6 +136,7 @@ app.post("/articles/:id", function (req, res) {
         })
 })
 
+// delete specific comment
 app.delete("/comments/:id", function(req, res){
     db.Comment.findByIdAndRemove(req.params.id)
     .then(function(){
