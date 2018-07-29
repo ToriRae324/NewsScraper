@@ -122,10 +122,10 @@ app.get("/articles/:id", function (req, res) {
 });
 
 // post comment to article
-app.post("articles/:id", function (req, res) {
+app.post("/articles/:id", function (req, res) {
     db.Comment.create(req.body)
         .then(function (newComment) {
-            return db.Article.findByIdAndUpdate(req.params.id, { $push: { comments: newComment._id } }, { new: true });
+            return db.Article.findByIdAndUpdate(req.params.id, {$push: { comments: newComment._id } }, { new: true });
         })
         .then(function (newArticle) {
             res.json(newArticle);
@@ -135,6 +135,7 @@ app.post("articles/:id", function (req, res) {
             res.json(err);
         })
 })
+
 
 // HTML Routes
 
