@@ -39,12 +39,13 @@ mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
 
 
-// function to scrape news site and add to database
+// function to scrape news site
 const scrapeNews = function () {
-    axios.get("http://www.blacknews.com/").then(function (res) {
-        // Then, we load that into cheerio and save it to $ for a shorthand selector
-        var cheer = cheerio.load(res.data);
+    return axios.get("http://www.blacknews.com/").then(function (res) {
 
+        var allArticles = []
+
+        var cheer = cheerio.load(res.data);
 
         cheer(".post-body.entry-content").each(function (i, element) {
             // Save an empty result object
@@ -69,22 +70,10 @@ const scrapeNews = function () {
                 .children("img")
                 .attr("src");
 
-
-            // Push each result to database
-            db.Article.create(result)
-                .then(function (dbArticle) {
-                    console.log("Article Added");
-                })
-                .catch(function (err) {
-                    return err;
-                });
-
-        
+            allArticles.push(result)
         });
-        console.log("Scrapping");
-
+        return allArticles
     });
-    
 }
 
 
@@ -93,6 +82,14 @@ const scrapeNews = function () {
 // scape the website and add to database
 app.get("/scrape", function (req, res) {
     scrapeNews()
+        .then(function (allArticles) {
+            // add array of articles to database
+            db.Article.create(allArticles);
+            return res.json(true);
+        })
+        .catch(function (err) {
+            return err;
+        });
 });
 
 // get all articles with comments from database
@@ -125,7 +122,7 @@ app.get("/articles/:id", function (req, res) {
 app.post("/articles/:id", function (req, res) {
     db.Comment.create(req.body)
         .then(function (newComment) {
-            return db.Article.findByIdAndUpdate(req.params.id, {$push: { comments: newComment._id } }, { new: true });
+            return db.Article.findByIdAndUpdate(req.params.id, { $push: { comments: newComment._id } }, { new: true });
         })
         .then(function (newArticle) {
             res.json(newArticle);
@@ -137,15 +134,15 @@ app.post("/articles/:id", function (req, res) {
 })
 
 // delete specific comment
-app.delete("/comments/:id", function(req, res){
+app.delete("/comments/:id", function (req, res) {
     db.Comment.findByIdAndRemove(req.params.id)
-    .then(function(){
-        console.log("Comment Removed")
-        res.json(true);
-    })
-    .catch(function(err){
-        res.json(err);
-    })
+        .then(function () {
+            console.log("Comment Removed")
+            res.json(true);
+        })
+        .catch(function (err) {
+            res.json(err);
+        })
 })
 
 

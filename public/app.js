@@ -3,11 +3,11 @@ $("#scrape").on("click", function(){
         method: "GET",
         url: "/scrape"
     })
-    .then(function(){ //add a callback?
-
-        console.log("Scrape Complete");
-        location.reload();
-        
+    .then(function(data){ 
+        if( data === true) {
+        console.log("Scrape Complete")
+        location.reload(); 
+        }
     })
 })
 
