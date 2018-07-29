@@ -1,24 +1,29 @@
-$(document).on("click", ".submitComment", function(){
-    event.preventDefault();
+$(document).ready(function () {
 
-    const id = $(this).data("_id");
-    const commentText = $(this).parent().children().children(".commentText").val();
+    $(document).on("click", ".submitComment", function () {
+        event.preventDefault();
 
-    console.log("comment: ", commentText, " -- id: ", id);
+        const id = $(this).data("_id");
+        const commentText = $(this).parent().children().children(".commentText").val();
 
-    $.ajax({
-        method: "POST",
-        url: "/articles/" + id,
-        data: {
-            comment: commentText
-        }
-    }).then(function (newComment) {
-        $(".commentText").val("");
+        console.log("comment: ", commentText, " -- id: ", id);
 
-        // var html =
-        // `<p><span class="delete" data-id=${newComment._id}>x</span>${newComment.commentText}</p>`;
-        // $("#"+newComment.).prepend(html);
+        $.ajax({
+            method: "POST",
+            url: "/articles/" + id,
+            data: {
+                comment: commentText
+            }
+        }).then(function (newComment) {
+            console.log(newComment);
+            $(".commentText").val("");
 
-        // location.reload();
-    });
+            // var html =
+            // `<p><span class="delete" data-id=${newComment._id}>x</span>${newComment.commentText}</p>`;
+            // $("#"+newComment.).prepend(html);
+
+            // location.reload();
+        });
+    })
+
 })
