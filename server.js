@@ -136,6 +136,18 @@ app.post("/articles/:id", function (req, res) {
         })
 })
 
+app.delete("/comments/:id", function(req, res){
+    db.Comment.findByIdAndRemove(req.params.id)
+    .then(function(){
+        console.log("Comment Removed")
+        res.json(true);
+    })
+    .catch(function(err){
+        res.json(err);
+    })
+})
+
+
 
 // HTML Routes
 
